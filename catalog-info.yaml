@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: PandABlocks-webcontrol
+  title: PandABlocks-webcontrol
+  description: webcontrol
+spec:
+  type: documentation
+  lifecycle: experimental
+  owner: user:rye74444
