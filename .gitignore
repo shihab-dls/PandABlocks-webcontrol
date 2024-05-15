@@ -1,7 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*$py.class
 
 # C extensions
 *.so
@@ -9,6 +8,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
+.venv
 build/
 develop-eggs/
 dist/
@@ -23,6 +23,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+**/_version.py
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -42,8 +43,9 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
-*,cover
-.hypothesis/
+cov.xml
+.pytest_cache/
+.mypy_cache/
 
 # Translations
 *.mo
@@ -58,5 +60,12 @@ docs/_build/
 # PyBuilder
 target/
 
-#Ipython Notebook
-.ipynb_checkpoints
+# likely venv names
+.venv*
+venv*
+
+# further build artifacts
+lockfiles/
+
+# ruff cache
+.ruff_cache/
