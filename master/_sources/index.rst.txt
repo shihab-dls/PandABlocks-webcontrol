@@ -1,17 +1,29 @@
-Introduction
-============
+:html_theme.sidebar_secondary.remove:
 
-The PandABlocks-webcontrol package provides a webserver for a PandA. This
-exposes a browser based Graphical User Interface (GUI) that can be used to:
+.. include:: ../README.rst
+    :end-before: when included in index.rst
 
-- Inspect the available Functional Blocks present on the system
-- Connect Blocks together
-- Set and view Block parameters
-- Save a Design consisting of a number of connected Blocks and their parameters
-- Load a previously saved Design
+How the documentation is structured
+-----------------------------------
 
-The documentation has two starting points:
+The documentation is split into 2 sections:
 
-- The `Quick Start` gives a simple walkthrough on how to connect blocks together
-- The `User Interface Overview` and onwards gives more in depth information
+.. grid:: 2
 
+    .. grid-item-card:: :material-regular:`person;4em`
+        :link: user/index
+        :link-type: doc
+
+        The User Guide contains documentation on how to install and use PandABlocks-webcontrol.
+
+    .. grid-item-card:: :material-regular:`code;4em`
+        :link: developer/index
+        :link-type: doc
+
+        The Developer Guide contains documentation on how to develop and contribute changes back to PandABlocks-webcontrol.
+
+.. toctree::
+    :hidden:
+
+    user/index
+    developer/index
