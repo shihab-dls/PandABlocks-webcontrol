@@ -24,7 +24,7 @@ def get_sorted_tags_list() -> List[str]:
     return report_output(stdout, "Tags list")
 
 
-def get_versions(ref: str, add: Optional[str]) -> List[str]:
+def get_versions(ref: str, add: Optional[str], remove: Optional[str]) -> List[str]:
     """Generate the file containing the list of all GitHub Pages builds."""
     # Get the directories (i.e. builds) from the GitHub Pages branch
     try:
@@ -36,6 +36,9 @@ def get_versions(ref: str, add: Optional[str]) -> List[str]:
     # Add and remove from the list of builds
     if add:
         builds.add(add)
+    if remove:
+        assert remove in builds, f"Build '{remove}' not in {sorted(builds)}"
+        builds.remove(remove)
 
     # Get a sorted list of tags
     tags = get_sorted_tags_list()
@@ -55,12 +58,9 @@ def get_versions(ref: str, add: Optional[str]) -> List[str]:
 
 def write_json(path: Path, repository: str, versions: str):
     org, repo_name = repository.split("/")
-    pages_url = f"https://{org}.github.io"
-    if repo_name != f"{org}.github.io":
-        # Only add the repo name if it isn't the source for the org pages site
-        pages_url += f"/{repo_name}"
     struct = [
-        {"version": version, "url": f"{pages_url}/{version}/"} for version in versions
+        {"version": version, "url": f"https://{org}.github.io/{repo_name}/{version}/"}
+        for version in versions
     ]
     text = json.dumps(struct, indent=2)
     print(f"JSON switcher:\n{text}")
@@ -69,11 +69,15 @@ def write_json(path: Path, repository: str, versions: str):
 
 def main(args=None):
     parser = ArgumentParser(
-        description="Make a versions.json file from gh-pages directories"
+        description="Make a versions.txt file from gh-pages directories"
     )
     parser.add_argument(
         "--add",
         help="Add this directory to the list of existing directories",
+    )
+    parser.add_argument(
+        "--remove",
+        help="Remove this directory from the list of existing directories",
     )
     parser.add_argument(
         "repository",
@@ -87,7 +91,7 @@ def main(args=None):
     args = parser.parse_args(args)
 
     # Write the versions file
-    versions = get_versions("origin/gh-pages", args.add)
+    versions = get_versions("origin/gh-pages", args.add, args.remove)
     write_json(args.output, args.repository, versions)
 
 

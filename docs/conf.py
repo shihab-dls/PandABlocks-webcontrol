@@ -15,9 +15,7 @@ import pandablocks
 # -- General configuration ------------------------------------------------
 
 # General information about the project.
-project = "PandABlocks-rootfs"
-copyright = "2024, Diamond Light Source"
-author = "Tom Cobb"
+project = "PandABlocks-webcontrol"
 
 # The full version, including alpha/beta/rc tags.
 release = pandablocks.__version__
@@ -46,12 +44,7 @@ extensions = [
     "sphinx_copybutton",
     # For the card element
     "sphinx_design",
-    # So we can write markdown files
-    "myst_parser",
 ]
-
-# So we can use the ::: syntax
-myst_enable_extensions = ["colon_fence"]
 
 # If true, Sphinx will warn about all references where the target cannot
 # be found.
@@ -70,8 +63,6 @@ nitpick_ignore = [
     ("py:class", "'object'"),
     ("py:class", "'id'"),
     ("py:class", "typing_extensions.Literal"),
-    ("py:func", "int"),
-    ("py:class", "pandablocks.commands.T"),
 ]
 
 # Both the class’ and the __init__ method’s docstring are concatenated and
@@ -91,6 +82,9 @@ graphviz_output_format = "svg"
 # role, that is, for text marked up `like this`
 default_role = "any"
 
+# The suffix of source filenames.
+source_suffix = ".rst"
+
 # The master toctree document.
 master_doc = "index"
 
@@ -104,11 +98,7 @@ pygments_style = "sphinx"
 
 # This means you can link things like `str` and `asyncio` to the relevant
 # docs in the python documentation.
-intersphinx_mapping = {
-    "python": ("https://docs.python.org/3/", None),
-    "numpy": ("https://numpy.org/doc/stable/", None),
-    "h5py": ("https://docs.h5py.org/en/stable/", None),
-}
+intersphinx_mapping = {"python": ("https://docs.python.org/3/", None)}
 
 # A dictionary of graphviz graph attributes for inheritance diagrams.
 inheritance_graph_attrs = {"rankdir": "TB"}
@@ -120,8 +110,6 @@ rst_epilog = """
 .. _ruff: https://beta.ruff.rs/docs/
 .. _mypy: http://mypy-lang.org/
 .. _pre-commit: https://pre-commit.com/
-.. _numpy: https://numpy.org/
-.. _h5py: https://www.h5py.org/
 """
 
 # Ignore localhost links for periodic check that links in docs are valid
@@ -138,7 +126,7 @@ copybutton_prompt_is_regexp = True
 # a list of builtin themes.
 #
 html_theme = "pydata_sphinx_theme"
-github_repo = "PandABlocks-rootfs"
+github_repo = "PandABlocks-webcontrol"
 github_user = "PandABlocks"
 switcher_json = f"https://{github_user}.github.io/{github_repo}/switcher.json"
 switcher_exists = requests.get(switcher_json).ok
@@ -158,8 +146,8 @@ if not switcher_exists:
 # 3. Existing project with old skeleton that makes broken switcher,
 #    switcher exists but is broken
 # Point 3 makes checking switcher difficult, because the updated skeleton
-# will fix the switcher at the end of the docs workflow, but never gets a
-# chance to complete as the docs build warns and fails.
+# will fix the switcher at the end of the docs workflow, but never gets a chance
+# to complete as the docs build warns and fails.
 html_theme_options = {
     "logo": {
         "text": project,
@@ -179,6 +167,12 @@ html_theme_options = {
     },
     "check_switcher": False,
     "navbar_end": ["theme-switcher", "icon-links", "version-switcher"],
+    "external_links": [
+        {
+            "name": "Release Notes",
+            "url": f"https://github.com/{github_user}/{github_repo}/releases",
+        }
+    ],
     "navigation_with_keys": False,
 }
 
@@ -194,8 +188,8 @@ html_context = {
 html_show_sphinx = False
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
-html_show_copyright = True
+html_show_copyright = False
 
 # Logo
-html_logo = "images/PandA-logo-for-black-background.svg"
-html_favicon = "images/favicon.ico"
+html_logo = "images/dls-logo.svg"
+html_favicon = "images/dls-favicon.ico"
